@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { ProjectsComponent } from '../projects/projects.component';
@@ -21,13 +21,17 @@ interface WindowItem {
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.scss']
 })
-export class DesktopComponent {
+export class DesktopComponent implements OnInit{
+
+  ngOnInit(): void {
+    this.openWindow('Home', HomeComponent);
+  }
 
   nextId = 1;
   highestZIndex = 1;
   icons = [
     { title: 'Home', component: HomeComponent },
-    { title: 'About', component: AboutComponent },
+    { title: 'About Me', component: AboutComponent },
     { title: 'Projects', component: ProjectsComponent },
     { title: 'Contact', component: ContactComponent }
   ];
@@ -42,8 +46,8 @@ export class DesktopComponent {
       x: 100 + this.windows.length * 20,
       y: 100 + this.windows.length * 20,
       zIndex: this.windows.length + 1,
-      width: 400,
-      height: 400,
+      width: 600,
+      height: 600,
       minimized: false,
     };
 
@@ -53,6 +57,14 @@ export class DesktopComponent {
   closeWindow(id: number) {
     this.windows = this.windows.filter(win => win.id !== id);
   }
+
+  toggleMaximize(windowId: string) {
+    const window = this.windows.find(w => w.id === windowId);
+    if (window) {
+      window.isMaximized = !window.isMaximized;
+    }
+  }
+
 
   bringToFront(event: MouseEvent, id: number) {
     const window = this.windows.find(win => win.id === id);
@@ -84,29 +96,29 @@ export class DesktopComponent {
 
   startResize(event: MouseEvent, window: any, direction: string) {
     event.preventDefault();
-  
+
     const initialX = event.clientX;
     const initialY = event.clientY;
     const initialWidth = window.width;
     const initialHeight = window.height;
     const initialLeft = window.x;
     const initialTop = window.y;
-  
+
     const onMouseMove = (moveEvent: MouseEvent) => {
       let newWidth = initialWidth;
       let newHeight = initialHeight;
       let newLeft = initialLeft;
       let newTop = initialTop;
-  
+
       if (direction === 'top-left') {
         newWidth = initialWidth - (moveEvent.clientX - initialX);
         newHeight = initialHeight - (moveEvent.clientY - initialY);
-        newLeft = initialLeft + (moveEvent.clientX - initialX); 
-        newTop = initialTop + (moveEvent.clientY - initialY); 
+        newLeft = initialLeft + (moveEvent.clientX - initialX);
+        newTop = initialTop + (moveEvent.clientY - initialY);
       } else if (direction === 'top-right') {
         newWidth = initialWidth + (moveEvent.clientX - initialX);
         newHeight = initialHeight - (moveEvent.clientY - initialY);
-        newTop = initialTop + (moveEvent.clientY - initialY); 
+        newTop = initialTop + (moveEvent.clientY - initialY);
       } else if (direction === 'bottom-left') {
         newWidth = initialWidth - (moveEvent.clientX - initialX);
         newHeight = initialHeight + (moveEvent.clientY - initialY);
@@ -115,23 +127,23 @@ export class DesktopComponent {
         newWidth = initialWidth + (moveEvent.clientX - initialX);
         newHeight = initialHeight + (moveEvent.clientY - initialY);
       }
-  
+
       window.width = Math.max(newWidth, 100);
       window.height = Math.max(newHeight, 100);
-  
+
       window.x = newLeft;
       window.y = newTop;
     };
-  
+
     const onMouseUp = () => {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
-  
+
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   }
-  
+
 
   toggleMinimize(id: number) {
     const window = this.windows.find(win => win.id === id);

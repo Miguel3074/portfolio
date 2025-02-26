@@ -89,7 +89,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/assets/icons/icon.png"
             ],
             "styles": [
               "src/styles.scss"

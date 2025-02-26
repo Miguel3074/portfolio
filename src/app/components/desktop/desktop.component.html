@@ -7,12 +7,13 @@
 
     <div *ngFor="let window of windows" class="window" [style.left.px]="window.x" [style.top.px]="window.y"
         [style.zIndex]="window.zIndex" [ngStyle]="{'width.px': window.width, 'height.px': window.height}"
-        [class.minimized]="window.minimized">
+        [class.minimized]="window.minimized" [class.maximized]="window.isMaximized">
 
-        <div class="window-header" (mousedown)="bringToFront($event, window.id)">
+        <div class="window-header" (mousedown)="bringToFront($event, window.id)" >
             <span>{{ window.title }}</span>
             <div class="window-controls">
                 <button (click)="toggleMinimize(window.id)">_</button>
+                <button (click)="toggleMaximize(window.id)">🗗</button>
                 <button (click)="closeWindow(window.id)">X</button>
             </div>
         </div>
