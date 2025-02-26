@@ -1,0 +1,29 @@
+<div class="desktop">
+
+    <div class="icon" *ngFor="let icon of icons" (click)="openWindow(icon.title, icon.component)">
+        <img src="assets/icons/{{icon.title}}.png" alt="{{icon.title}}">
+        <p>{{ icon.title }}</p>
+    </div>
+
+    <div *ngFor="let window of windows" class="window" [style.left.px]="window.x" [style.top.px]="window.y"
+        [style.zIndex]="window.zIndex" [ngStyle]="{'width.px': window.width, 'height.px': window.height}"
+        [class.minimized]="window.minimized">
+
+        <div class="window-header" (mousedown)="bringToFront($event, window.id)">
+            <span>{{ window.title }}</span>
+            <div class="window-controls">
+                <button (click)="toggleMinimize(window.id)">_</button>
+                <button (click)="closeWindow(window.id)">X</button>
+            </div>
+        </div>
+
+        <div class="resize-handle top top-left" (mousedown)="startResize($event, window, 'top-left')"></div>
+        <div class="resize-handle top top-right" (mousedown)="startResize($event, window, 'top-right')"></div>
+        <div class="resize-handle bottom bottom-left" (mousedown)="startResize($event, window, 'bottom-left')"></div>
+        <div class="resize-handle bottom bottom-right" (mousedown)="startResize($event, window, 'bottom-right')"></div>        
+
+        <div class="window-content" *ngIf="!window.minimized">
+            <ng-container *ngComponentOutlet="window.component"></ng-container>
+        </div>
+    </div>
+</div>

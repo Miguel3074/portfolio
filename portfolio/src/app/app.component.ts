@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './components/home/home.component';
+import { DesktopComponent } from './components/desktop/desktop.component';
 
 @Component({
   selector: 'app-root',
   imports: [
-    HomeComponent
+    DesktopComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

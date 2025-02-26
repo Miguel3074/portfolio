@@ -1,0 +1,109 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.desktop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../../../assets/wallpaper.png') no-repeat center center/cover;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.icon {
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 10px;
+}
+
+.icon img {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 0 auto;
+}
+
+.window {
+  position: absolute;
+  width: 300px;
+  background: #c0c0c0;
+  border: 2px solid #808080;
+  box-shadow: 3px 3px 0 #404040;
+  font-family: Arial, sans-serif;
+}
+
+.window-header {
+  background: linear-gradient(to bottom, #000080, #0000a0);
+  color: white;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.window-controls button {
+  background: #c0c0c0;
+  border: 1px solid #808080;
+  font-weight: bold;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.window-content {
+  background: white;
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
+}
+
+.minimized {
+  display: none;
+}
+
+.resize-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  .top{
+    background-color: #0000a0;
+  }
+  .bottom{
+    background-color: white;
+  }
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize;
+}
