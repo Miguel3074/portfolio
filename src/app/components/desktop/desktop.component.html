@@ -7,7 +7,7 @@
 
     <div *ngFor="let window of windows" class="window" [style.left.px]="window.x" [style.top.px]="window.y"
         [style.zIndex]="window.zIndex" [ngStyle]="{'width.px': window.width, 'height.px': window.height}"
-        [class.minimized]="window.minimized" [class.maximized]="window.isMaximized">
+        [class.minimized]="window.minimized"  [class.maximized]="window.isMaximized">
 
         <div class="window-header" (mousedown)="bringToFront($event, window.id)" >
             <span>{{ window.title }}</span>
@@ -21,10 +21,20 @@
         <div class="resize-handle top top-left" (mousedown)="startResize($event, window, 'top-left')"></div>
         <div class="resize-handle top top-right" (mousedown)="startResize($event, window, 'top-right')"></div>
         <div class="resize-handle bottom bottom-left" (mousedown)="startResize($event, window, 'bottom-left')"></div>
-        <div class="resize-handle bottom bottom-right" (mousedown)="startResize($event, window, 'bottom-right')"></div>        
+        <div class="resize-handle bottom bottom-right" (mousedown)="startResize($event, window, 'bottom-right')"></div>
 
         <div class="window-content" *ngIf="!window.minimized">
             <ng-container *ngComponentOutlet="window.component"></ng-container>
         </div>
     </div>
+
+    <div class="taskbar">
+        <div class="taskbar-icons">
+            <div *ngFor="let window of windows" class="taskbar-icon" (click)="restoreWindow(window.id)">
+                <img src="assets/icons/{{window.title}}.png" alt="{{window.title}}">
+                <span>{{ window.title }}</span>
+            </div>
+        </div>        
+    </div>
+
 </div>

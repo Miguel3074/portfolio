@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { ProjectsComponent } from '../projects/projects.component';
@@ -21,7 +21,7 @@ interface WindowItem {
   templateUrl: './desktop.component.html',
   styleUrls: ['./desktop.component.scss']
 })
-export class DesktopComponent implements OnInit{
+export class DesktopComponent implements OnInit {
 
   ngOnInit(): void {
     this.openWindow('Home', HomeComponent);
@@ -151,4 +151,15 @@ export class DesktopComponent implements OnInit{
       window.minimized = !window.minimized;
     }
   }
+
+  restoreWindow(id: number) {
+    const window = this.windows.find(w => w.id === id);
+    if (window) {
+      window.minimized = !window.minimized;
+      window.zIndex = ++this.highestZIndex;
+    }
+  }
+
 }
+
+
