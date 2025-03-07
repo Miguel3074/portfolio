@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { ProjectsComponent } from '../projects/projects.component';
@@ -23,12 +23,18 @@ interface WindowItem {
 })
 export class DesktopComponent implements OnInit {
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
+  currentTime: string = '';
+
   ngOnInit(): void {
     this.openWindow('Home', HomeComponent);
+    this.updateTime();
   }
 
   nextId = 1;
   highestZIndex = 1;
+
   icons = [
     { title: 'Home', component: HomeComponent },
     { title: 'About Me', component: AboutComponent },
@@ -39,6 +45,7 @@ export class DesktopComponent implements OnInit {
   windows: any[] = [];
 
   openWindow(title: string, component: any) {
+    this.updateTime();
     const newWindow = {
       id: this.windows.length + 1,
       title,
@@ -55,18 +62,20 @@ export class DesktopComponent implements OnInit {
   }
 
   closeWindow(id: number) {
+    this.updateTime();
     this.windows = this.windows.filter(win => win.id !== id);
   }
 
   toggleMaximize(windowId: string) {
+    this.updateTime();
     const window = this.windows.find(w => w.id === windowId);
     if (window) {
       window.isMaximized = !window.isMaximized;
     }
   }
 
-
   bringToFront(event: MouseEvent, id: number) {
+    this.updateTime();
     const window = this.windows.find(win => win.id === id);
     if (window) {
       window.zIndex = ++this.highestZIndex;
@@ -95,6 +104,7 @@ export class DesktopComponent implements OnInit {
   }
 
   startResize(event: MouseEvent, window: any, direction: string) {
+    this.updateTime();
     event.preventDefault();
 
     const initialX = event.clientX;
@@ -146,6 +156,7 @@ export class DesktopComponent implements OnInit {
 
 
   toggleMinimize(id: number) {
+    this.updateTime();
     const window = this.windows.find(win => win.id === id);
     if (window) {
       window.minimized = !window.minimized;
@@ -153,6 +164,7 @@ export class DesktopComponent implements OnInit {
   }
 
   restoreWindow(id: number) {
+    this.updateTime();
     const window = this.windows.find(w => w.id === id);
     if (window) {
       window.minimized = !window.minimized;
@@ -160,6 +172,22 @@ export class DesktopComponent implements OnInit {
     }
   }
 
+  closeActiveWindow() {
+    this.updateTime();
+    if (this.windows.length > 0) {
+      this.windows.pop();
+    }
+  }
+
+  updateTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+
+    const formattedHours = hours < 10 ? `0${hours}` : hours.toString();
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
+
+    this.currentTime = `${formattedHours}:${formattedMinutes}`;
+  }
+
 }
-
-

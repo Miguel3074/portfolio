@@ -1,5 +1,13 @@
 <div class="desktop">
 
+    <div class="status-bar mobile">
+        <div class="time" id="current-time">{{ currentTime }}</div>
+        <div class="icons">
+            <img class="wifi" src="assets/icons/wifi.png" alt="wifi">
+            <div class="battery"></div>
+        </div>
+    </div>    
+
     <div class="icon" *ngFor="let icon of icons" (click)="openWindow(icon.title, icon.component)">
         <img src="assets/icons/{{icon.title}}.png" alt="{{icon.title}}">
         <p>{{ icon.title }}</p>
@@ -7,9 +15,9 @@
 
     <div *ngFor="let window of windows" class="window" [style.left.px]="window.x" [style.top.px]="window.y"
         [style.zIndex]="window.zIndex" [ngStyle]="{'width.px': window.width, 'height.px': window.height}"
-        [class.minimized]="window.minimized"  [class.maximized]="window.isMaximized">
+        [class.minimized]="window.minimized" [class.maximized]="window.isMaximized">
 
-        <div class="window-header" (mousedown)="bringToFront($event, window.id)" >
+        <div class="window-header web" (mousedown)="bringToFront($event, window.id)">
             <span>{{ window.title }}</span>
             <div class="window-controls">
                 <button (click)="toggleMinimize(window.id)">_</button>
@@ -29,11 +37,22 @@
     </div>
 
     <div class="taskbar">
-        <div class="taskbar-icons">
+        <div class="taskbar-icons web">
             <div *ngFor="let window of windows" class="taskbar-icon" (click)="restoreWindow(window.id)">
                 <img src="assets/icons/{{window.title}}.png" alt="{{window.title}}">
                 <span>{{ window.title }}</span>
             </div>
+            <div class="status-bar">
+                <div class="time" id="current-time">{{ currentTime }}</div>
+                <div class="icons">
+                    <img class="wifi" src="assets/icons/wifi.png" alt="wifi">
+                    <div class="battery"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile">
+            <button class="button" (click)="closeActiveWindow()">⌂</button>
         </div>        
     </div>
 
