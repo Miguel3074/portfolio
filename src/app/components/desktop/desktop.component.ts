@@ -4,16 +4,8 @@ import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { ProjectsComponent } from '../projects/projects.component';
 import { ContactComponent } from '../contact/contact.component';
+import { SkillsComponent } from '../skills/skills.component';
 
-interface WindowItem {
-  id: number;
-  title: string;
-  component: string;
-  x: number;
-  y: number;
-  zIndex: number;
-  minimized: boolean;
-}
 
 @Component({
   selector: 'app-desktop',
@@ -38,6 +30,7 @@ export class DesktopComponent implements OnInit {
   icons = [
     { title: 'Home', component: HomeComponent },
     { title: 'About Me', component: AboutComponent },
+    { title: 'Skills', component: SkillsComponent },
     { title: 'Projects', component: ProjectsComponent },
     { title: 'Contact', component: ContactComponent }
   ];
